@@ -14,14 +14,12 @@ echo "<option value='". $row['Name'] ."'>" .$row['Name'] ."</option>" ;
 }
 ?>
 </select>
-<button type='submit' value="submit" name="submit"> Submit</button>
-</form>
 <?php
 include_once "include/dbh.inc.php";
 $sql = mysqli_query($conn,"SELECT Name,Health,Defence,Magic_Defence,Speed,Movement FROM character_stats_sheet Where Name='to_user'");
 $row = mysqli_num_rows($sql);
 $names = $Health = $Defence = $Magic_Defence = $Speed = $Movement = array();
-if(isset($_POST['submit']))
+if(isset($_POST['submit2']))
 {
     $id = mysqli_real_escape_string($conn,$_POST['to_user']);
     $runit="SELECT Name,Health,Defence,Magic_Defence,Speed,Movement FROM character_stats_sheet Where Name='$id'";
@@ -44,14 +42,13 @@ if(isset($_POST['submit']))
             echo "Magic defence: ". $Magic_Defence. "<br>";
             echo "Speed: " . $Speed. "<br>";
             echo "Movement: " .  $Movement. "<br>";
+
         }
     }
 
 
 }
 ?>
-
-<form method="POST">
     <input type = "text"name="Power" placeholder="Power">
     <input type = "text"name="Mod" placeholder="Modfier...1.25">
     <button type='submit' value="submit2" name="submit2"> Submit</button>
@@ -62,12 +59,10 @@ if(isset($_POST['submit2']))
 {
     $power = mysqli_real_escape_string($conn,$_POST['Power']);
     $mod=mysqli_real_escape_string($conn,$_POST['Mod']);
-    echo $power ."<br>". $mod;
+    echo "Power:".$power ."Mod:". $mod . "<br>Defence:".intval($Defence);
     $onehundred = 100;
-    $string_array= json_encode($Defence);
-    $damage = (intval($power)  * intval($mod)) * (intval($onehundred)/(intval($onehundred) + intval($string_array)));
-    echo "<br>" . intval($string_array);
-    echo "<br>" .$damage;
+    $damage = (intval($power)  * intval($mod)) * (intval($onehundred)/(intval($onehundred) + intval($Defence)));
+    echo "<br>".ceil($damage)." " .$damage;
 
 }
 
