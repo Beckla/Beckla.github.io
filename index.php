@@ -59,10 +59,16 @@ if(isset($_POST['submit2']))
 {
     $power = mysqli_real_escape_string($conn,$_POST['Power']);
     $mod=mysqli_real_escape_string($conn,$_POST['Mod']);
-    echo "Power:".$power ."Mod:". $mod . "<br>Defence:".intval($Defence);
+    echo "Power: ".$power ."<br>Mod:". $mod . "<br>Defence:".intval($Defence);
+    
     $onehundred = 100;
-    $damage = (intval($power)  * intval($mod)) * (intval($onehundred)/(intval($onehundred) + intval($Defence)));
-    echo "<br>".ceil($damage)." " .$damage;
+    $powmod = $power * $mod;
+    $defrat= $onehundred + intval($Defence);
+    $defmod =$onehundred / $defrat;
+    echo "<br>Modified power: " . $powmod. "<br>";
+    $damage =$powmod *  $defmod;
+
+    echo "<br>Rounded number: ".ceil($damage)."<br>None rounded number: " .$damage;
 
 }
 
