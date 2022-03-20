@@ -26,11 +26,19 @@ function RowToGet($fterm)
             echo $Magic_Defence. "<br>";
             echo $Speed. "<br>";
             echo $Movement. "<br>";
+            $json_data = json_encode($names,$Health,$Defence,$Magic_Defence,$Speed,$Movement);
+            file_put_contents('myfile.json', $json_data);
         }
-        
-    
        // echo "total number of characters equal " . $x ;
     }
+
    
+}
+function DROPDOWN()
+{
+    include_once 'dbh.inc.php';
+    $conn= mysqli_connect("localhost","root","","game_test");
+    $sql= "SELECT Name From 'character_stats_sheet'";
+    $allnames=mysqli_query($conn,$sql);
 }
 ?>
